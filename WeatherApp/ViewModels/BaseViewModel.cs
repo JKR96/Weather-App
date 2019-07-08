@@ -7,6 +7,7 @@ using Xamarin.Forms;
 
 using WeatherApp.Models;
 using WeatherApp.Services;
+using PropertyChanged;
 
 namespace WeatherApp.ViewModels
 {
