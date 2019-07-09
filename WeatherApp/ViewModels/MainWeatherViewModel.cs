@@ -14,6 +14,7 @@ namespace WeatherApp.ViewModels
     public class MainWeatherViewModel : BaseViewModel
     {
         public ForecastWeatherDTO Weather { get; set; }
+        public string BackgroundImage { get; set; }
         public Command LoadCommand { get; set; }
 
         public MainWeatherViewModel()
@@ -33,6 +34,10 @@ namespace WeatherApp.ViewModels
             {
                 // Get weather
                 Xamarin.Essentials.Location location = await Geolocation.GetLastKnownLocationAsync();
+                if (location == null)
+                {
+                    location = new Xamarin.Essentials.Location(50.0, 22.0);
+                }
                 Weather = await GetForecastWeather(location, Configuration.API_LANGAUGE);
                 
                 // Get weather descriptions to download images
@@ -45,17 +50,19 @@ namespace WeatherApp.ViewModels
                 DateTime sunrise = DateTime.Parse(strSunrise);
                 DateTime sunset = DateTime.Parse(strSunset);
 
+                BackgroundImage = "https://images.unsplash.com/photo-1525490829609-d166ddb58678?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2698&q=80";
+
                 if (DateTime.Now.Hour > sunrise.Hour && DateTime.Now.Hour < sunset.Hour)
                 {
                     //Day
 
                     if (condition.Contains("sunny"))
                     {
-
+                        BackgroundImage = "https://images.unsplash.com/photo-1525490829609-d166ddb58678?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2698&q=80";
                     }
                     else if (condition.Contains("partly sunny"))
                     {
-
+                        BackgroundImage = "https://images.unsplash.com/photo-1525490829609-d166ddb58678?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2698&q=80";
                     }
                     else if (condition.Contains("cloud") ||
                         condition.Contains("overcast"))
