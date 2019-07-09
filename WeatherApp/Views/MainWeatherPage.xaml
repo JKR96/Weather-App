@@ -2,7 +2,14 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
              Title="{Binding Title}"
+             Style="{Binding BaseStyle}"
+             xmlns:local="clr-namespace:WeatherApp.Models.Converters"
              x:Class="WeatherApp.Views.MainWeatherPage">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <local:URLStringConverter x:Key="URLStringConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <Grid 
         VerticalOptions="FillAndExpand">
         <Image
@@ -11,13 +18,31 @@
             Source="{Binding BackgroundImage}"
             VerticalOptions="FillAndExpand" />
         <StackLayout
-            Grid.Row="0">
-            <Label BackgroundColor="Fuchsia" 
-                   Text="{Binding Weather.Current.Condition.Text}" 
-                   TextColor="Black" />   
-            <Label BackgroundColor="Fuchsia" 
-                   Text="{Binding Weather.Current.TempC}" 
-                   TextColor="Black" />   
+            Grid.Row="0"
+            Margin="20, 0">
+            <Label Text="{Binding Weather.Current.TempC, StringFormat='{0}°C'}"
+                   Style="{StaticResource HugeLabelStyle}"
+                   HorizontalOptions="Center"
+                   Margin="30"/> 
+            <Image 
+                Source="{Binding Weather.Current.Condition.Icon, 
+                       Converter={StaticResource URLStringConverter}}"
+                Scale="3"
+                HorizontalOptions="Center"/>
+            <Label Text="{Binding Weather.Location.Name}"
+                   Margin="0, 20, 0, 0"
+                   Style="{StaticResource BaseLabelStyle}"/>
+            <Label Text="{Binding Weather.Current.Condition.Text}"
+                   Style="{StaticResource BaseLabelStyle}"/>
+            <Label Text="{Binding Weather.Current.WindKph, StringFormat='Wiatr: {0} km/h'}"
+                   Style="{StaticResource BaseLabelStyle}"/>
+            <Label Text="{Binding Weather.Current.WindDir, StringFormat='Kierunek wiatru: {0}'}"
+                   Style="{StaticResource BaseLabelStyle}"/>
+            <Label Text="{Binding Weather.Current.PrecipMm, StringFormat='Opady: {0} mm'}"
+                   Style="{StaticResource BaseLabelStyle}"/>
+            <Label Text="{Binding Weather.Current.Cloud, StringFormat='Zachmurzenie: {0}%'}"
+                   Style="{StaticResource BaseLabelStyle}"/>
+           
         </StackLayout>
     </Grid>
 </ContentPage>

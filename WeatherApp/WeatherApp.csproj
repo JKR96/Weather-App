@@ -19,5 +19,9 @@
   <ItemGroup>
     <Folder Include="Models\DTOs\" />
     <Folder Include="Models\Helpers\" />
+    <Folder Include="Models\Converters\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="ViewModels\ForecastViewModel.cs" />
   </ItemGroup>
 </Project>

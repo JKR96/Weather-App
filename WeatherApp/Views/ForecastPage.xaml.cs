@@ -3,15 +3,15 @@ using Xamarin.Forms;
 
 namespace WeatherApp.Views
 {
-    public partial class MainWeatherPage : ContentPage
+    public partial class ForecastPage : ContentPage
     {
         MainWeatherViewModel viewModel;
 
-        public MainWeatherPage()
+        public ForecastPage()
         {
             InitializeComponent();
             viewModel = new MainWeatherViewModel();
-            viewModel.Title = "Aktualna pogoda";
+            viewModel.Title = "Prognoza pogody";
             BindingContext = viewModel;
         }
 
@@ -20,6 +20,6 @@ namespace WeatherApp.Views
             base.OnAppearing();
             viewModel.LoadCommand.Execute(null);
         }
-    }
 
+    }
 }

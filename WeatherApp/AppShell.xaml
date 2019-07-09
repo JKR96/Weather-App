@@ -15,24 +15,27 @@
             <Color x:Key="NavigationPrimary">#2196F3</Color>
             <Style x:Key="BaseStyle" TargetType="Element">
                 <Setter Property="Shell.BackgroundColor" Value="{StaticResource NavigationPrimary}" />
-                <Setter Property="Shell.ForegroundColor" Value="White" />
-                <Setter Property="Shell.TitleColor" Value="White" />
+                <Setter Property="Shell.ForegroundColor" Value="Red" />
+                <Setter Property="Shell.TitleColor" Value="Magenta" />
                 <Setter Property="Shell.DisabledColor" Value="#B4FFFFFF" />
                 <Setter Property="Shell.UnselectedColor" Value="#95FFFFFF" />
                 <Setter Property="Shell.TabBarBackgroundColor" Value="{StaticResource NavigationPrimary}" />
-                <Setter Property="Shell.TabBarForegroundColor" Value="White" />
+                <Setter Property="Shell.TabBarForegroundColor" Value="Green" />
                 <Setter Property="Shell.TabBarUnselectedColor" Value="#95FFFFFF" />
-                <Setter Property="Shell.TabBarTitleColor" Value="White" />
+                <Setter Property="Shell.TabBarTitleColor" Value="Green" />
             </Style>
             <Style TargetType="ShellItem" BasedOn="{StaticResource BaseStyle}" />
         </ResourceDictionary>
     </Shell.Resources>
     <!-- Your Pages -->
-    <TabBar>
-        <Tab Title="Weather" Icon="tab_feed.png">
+    <TabBar Shell.TitleColor="{StaticResource NavigationPrimary}">
+        <Tab Title="Aktualna pogoda" Icon="tab_feed.png">
             <ShellContent ContentTemplate="{DataTemplate local:MainWeatherPage}" />
         </Tab>
-        <Tab Title="About" Icon="tab_about.png">
+        <Tab Title="Prognoza pogody" Icon="tab_feed.png">
+            <ShellContent ContentTemplate="{DataTemplate local:ForecastPage}" />
+        </Tab>
+        <Tab Title="O aplikacji" Icon="tab_about.png">
             <ShellContent ContentTemplate="{DataTemplate local:AboutPage}" />
         </Tab>
     </TabBar>

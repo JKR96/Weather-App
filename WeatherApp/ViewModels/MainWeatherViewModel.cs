@@ -19,7 +19,6 @@ namespace WeatherApp.ViewModels
 
         public MainWeatherViewModel()
         {
-            Title = "Weather";
             LoadCommand = new Command(async () => await ExecuteLoadCommand());
         }
 
@@ -39,98 +38,11 @@ namespace WeatherApp.ViewModels
                     location = new Xamarin.Essentials.Location(50.0, 22.0);
                 }
                 Weather = await GetForecastWeather(location, Configuration.API_LANGAUGE);
-                
+
                 // Get weather descriptions to download images
                 CurrentWeatherDTO descriptionWeather = await GetWeather(location, "en");
-
-                // Set day or night
                 string condition = descriptionWeather.Current.Condition.Text;
-                string strSunrise = Weather.Forecast.Forecastday[0].Astro.Sunrise;
-                string strSunset = Weather.Forecast.Forecastday[0].Astro.Sunset;
-                DateTime sunrise = DateTime.Parse(strSunrise);
-                DateTime sunset = DateTime.Parse(strSunset);
-
-                BackgroundImage = "https://images.unsplash.com/photo-1525490829609-d166ddb58678?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2698&q=80";
-
-                if (DateTime.Now.Hour > sunrise.Hour && DateTime.Now.Hour < sunset.Hour)
-                {
-                    //Day
-
-                    if (condition.Contains("sunny"))
-                    {
-                        BackgroundImage = "https://images.unsplash.com/photo-1525490829609-d166ddb58678?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2698&q=80";
-                    }
-                    else if (condition.Contains("partly sunny"))
-                    {
-                        BackgroundImage = "https://images.unsplash.com/photo-1525490829609-d166ddb58678?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2698&q=80";
-                    }
-                    else if (condition.Contains("cloud") ||
-                        condition.Contains("overcast"))
-                    {
-
-                    }
-                    else if (condition.Contains("mist") ||
-                        condition.Contains("fog"))
-                    {
-
-                    }
-                    else if (condition.Contains("rain") ||
-                        condition.Contains("drizzle"))
-                    {
-
-                    }
-                    else if (condition.Contains("snow") ||
-                        condition.Contains("sleet") ||
-                        condition.Contains("blizzard") ||
-                        condition.Contains("ice"))
-                    {
-
-                    }
-                    else if (condition.Contains("thunder") ||
-                        condition.Contains("overcast"))
-                    {
-
-                    }
-                }
-                else // Night
-                {
-                    if (condition.Contains("sunny"))
-                    {
-
-                    }
-                    else if (condition.Contains("partly sunny"))
-                    {
-
-                    }
-                    else if (condition.Contains("cloud") ||
-                        condition.Contains("overcast"))
-                    {
-
-                    }
-                    else if (condition.Contains("mist") ||
-                        condition.Contains("fog"))
-                    {
-
-                    }
-                    else if (condition.Contains("rain") ||
-                        condition.Contains("drizzle"))
-                    {
-
-                    }
-                    else if (condition.Contains("snow") ||
-                        condition.Contains("sleet") ||
-                        condition.Contains("blizzard") ||
-                        condition.Contains("ice"))
-                    {
-
-                    }
-                    else if (condition.Contains("thunder") ||
-                        condition.Contains("overcast"))
-                    {
-
-                    }
-                }
-
+                SetBackgroundImage(condition);
 
             }
             catch (Exception ex)
@@ -140,6 +52,89 @@ namespace WeatherApp.ViewModels
             finally
             {
                 IsBusy = false;
+            }
+        }
+
+        private void SetBackgroundImage(string condition)
+        {
+            if (Weather.Current.IsDay == 1)
+            {
+                //Day
+
+                if (condition.ToLower().Contains("sunny"))
+                {
+                    BackgroundImage = "https://images.unsplash.com/photo-1525490829609-d166ddb58678?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2698&q=80";
+                }
+                else if (condition.ToLower().Contains("partly sunny"))
+                {
+                    BackgroundImage = "https://images.unsplash.com/photo-1525490829609-d166ddb58678?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2698&q=80";
+                }
+                else if (condition.ToLower().Contains("cloud") ||
+                    condition.ToLower().Contains("overcast"))
+                {
+                    BackgroundImage = "https://images.unsplash.com/photo-1534088568595-a066f410bcda?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=989&q=80";
+                }
+                else if (condition.ToLower().Contains("mist") ||
+                    condition.ToLower().Contains("fog"))
+                {
+                    BackgroundImage = "https://images.unsplash.com/photo-1455656678494-4d1b5f3e7ad4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80";
+                }
+                else if (condition.ToLower().Contains("rain") ||
+                    condition.ToLower().Contains("drizzle"))
+                {
+                    BackgroundImage = "https://images.unsplash.com/photo-1525087740718-9e0f2c58c7ef?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2734&q=80";
+                }
+                else if (condition.ToLower().Contains("snow") ||
+                    condition.ToLower().Contains("sleet") ||
+                    condition.ToLower().Contains("blizzard") ||
+                    condition.ToLower().Contains("ice"))
+                {
+                    BackgroundImage = "https://images.unsplash.com/photo-1543751737-d7cf492060cd?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1952&q=80";
+                }
+                else if (condition.ToLower().Contains("thunder") ||
+                    condition.ToLower().Contains("overcast"))
+                {
+                    BackgroundImage = "https://images.pexels.com/photos/1051425/pexels-photo-1051425.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260";
+                }
+            }
+            else // Night
+            {
+                if (condition.ToLower().Contains("clear"))
+                {
+                    BackgroundImage = "https://images.unsplash.com/photo-1532798369041-b33eb576ef16?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1001&q=80";
+                }
+                else if (condition.ToLower().Contains("cloud") ||
+                    condition.ToLower().Contains("overcast"))
+                {
+                    BackgroundImage = "https://images.unsplash.com/photo-1518128160709-c575457dafa5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=934&q=80";
+                }
+                else if (condition.ToLower().Contains("mist") ||
+                    condition.ToLower().Contains("fog"))
+                {
+                    BackgroundImage = "https://images.pexels.com/photos/327308/pexels-photo-327308.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260";
+                }
+                else if (condition.ToLower().Contains("rain") ||
+                    condition.ToLower().Contains("drizzle"))
+                {
+                    BackgroundImage = "https://images.pexels.com/photos/396547/pexels-photo-396547.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260";
+                }
+                else if (condition.ToLower().Contains("snow") ||
+                    condition.ToLower().Contains("sleet") ||
+                    condition.ToLower().Contains("blizzard") ||
+                    condition.ToLower().Contains("ice"))
+                {
+                    BackgroundImage = "https://images.pexels.com/photos/773594/pexels-photo-773594.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260";
+                }
+                else if (condition.ToLower().Contains("thunder") ||
+                    condition.ToLower().Contains("overcast"))
+                {
+                    BackgroundImage = "https://images.pexels.com/photos/1162251/pexels-photo-1162251.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260";
+                }
+            }
+
+            if (string.IsNullOrEmpty(BackgroundImage))
+            {
+                BackgroundImage = "https://images.unsplash.com/photo-1525490829609-d166ddb58678?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2698&q=80";
             }
         }
 
@@ -164,7 +159,8 @@ namespace WeatherApp.ViewModels
                 Configuration.API_KEY +
                 "&q=" +
                 location.Latitude + "," + location.Longitude +
-                "&lang=" + lang);
+                "&lang=" + lang +
+                "&days=7");
         }
 
     }
