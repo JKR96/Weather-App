@@ -37,6 +37,7 @@ namespace WeatherApp.ViewModels
                 {
                     location = new Xamarin.Essentials.Location(50.0, 22.0);
                 }
+
                 Weather = await GetForecastWeather(location, Configuration.API_LANGAUGE);
 
                 // Get weather descriptions to download images
@@ -141,26 +142,27 @@ namespace WeatherApp.ViewModels
         private static async Task<CurrentWeatherDTO> GetWeather(Xamarin.Essentials.Location location,
             string lang)
         {
-            return await APIHelpers.Get<CurrentWeatherDTO>(
-                Configuration.API_URL +
+            string requestUrl = Configuration.API_URL +
                 "current.json?key=" +
                 Configuration.API_KEY +
                 "&q=" +
-                location.Latitude + "," + location.Longitude +
-                "&lang=" + lang);
+                location.Latitude.ToString().Replace(',', '.') + "," + location.Longitude.ToString().Replace(',', '.') +
+                "&lang=" + lang;
+            return await APIHelpers.Get<CurrentWeatherDTO>(requestUrl);
         }
 
-        private static async Task<ForecastWeatherDTO> GetForecastWeather(Xamarin.Essentials.Location location,
+        private async Task<ForecastWeatherDTO> GetForecastWeather(Xamarin.Essentials.Location location,
             string lang)
         {
-            return await APIHelpers.Get<ForecastWeatherDTO>(
-                Configuration.API_URL +
+            string requestUrl = Configuration.API_URL +
                 "forecast.json?key=" +
                 Configuration.API_KEY +
                 "&q=" +
-                location.Latitude + "," + location.Longitude +
+                location.Latitude.ToString().Replace(',', '.') + "," + location.Longitude.ToString().Replace(',', '.') +
                 "&lang=" + lang +
-                "&days=7");
+                "&days=7";
+            
+            return await APIHelpers.Get<ForecastWeatherDTO>(requestUrl);
         }
 
     }

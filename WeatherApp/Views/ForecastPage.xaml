@@ -29,12 +29,6 @@
                      <DataTemplate>
                        <ViewCell
                                 IsEnabled="false">
-                           <ViewCell.ContextActions>
-                             <!-- <MenuItem Clicked="OnMore" CommandParameter="{Binding .}"
-                                  Text="More" />
-                              <MenuItem Clicked="OnDelete" CommandParameter="{Binding .}"
-                                 Text="Delete" IsDestructive="True" />-->
-                           </ViewCell.ContextActions>
                                <Grid
                                     Margin="0, 0, 0, 20">
                                     <Grid.RowDefinitions>
@@ -55,7 +49,7 @@
                                         <Image Source="{Binding Day.Condition.Icon, 
                                             Converter={StaticResource URLStringConverter}}" 
                                                Scale="1.4"/>
-                                        <Label Text="{Binding Day.MaxtempC, StringFormat='{0}°C'}"
+                                        <Label Text="{Binding Day.MaxtempC, StringFormat='{0:F0}°C'}"
                                                Style="{StaticResource BaseLabelStyle}"/>
                                         <Label Text="{Binding Day.Condition.Text}"
                                                FontSize="14"
